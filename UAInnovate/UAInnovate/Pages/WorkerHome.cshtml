@@ -1,0 +1,25 @@
+﻿@page "/WorkerHome"
+@model UAInnovate.Pages.WorkerHome
+@{
+    // Layout = "~/Shared/_Layout.cshtml";
+}
+<div class="text-center">
+    <h1 class="display-4">Requests</h1>
+</div>
+
+@{
+    var models = new List<string> { "Model1", "Model2", "Model3" };
+}
+
+<div class="container" style="height: 100vh;">
+    <div class="row h-100">
+        @foreach (var model in models)
+        {
+            <div class="col-12 d-flex align-items-center justify-content-center mb-3">
+                <a href="@Url.Action("Index", model)" class="btn btn-primary btn-lg"
+                   style="width: 80%; height: 20%; font-size: 2rem; text-align: center;">
+                    @* @model Request Form *@
+                </a>
+            </div>
+        }
+    </div>
