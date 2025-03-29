@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\cloie\\source\\UAInnovate\\UAInnovate\\UAInnovate.csproj": {}
+    "C:\\Users\\cloie\\Source\\Repos\\UAInnovate2025\\UAInnovate\\UAInnovate\\UAInnovate.csproj": {}
   },
   "projects": {
-    "C:\\Users\\cloie\\source\\UAInnovate\\UAInnovate\\UAInnovate.csproj": {
+    "C:\\Users\\cloie\\Source\\Repos\\UAInnovate2025\\UAInnovate\\UAInnovate\\UAInnovate.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\cloie\\source\\UAInnovate\\UAInnovate\\UAInnovate.csproj",
+        "projectUniqueName": "C:\\Users\\cloie\\Source\\Repos\\UAInnovate2025\\UAInnovate\\UAInnovate\\UAInnovate.csproj",
         "projectName": "UAInnovate",
-        "projectPath": "C:\\Users\\cloie\\source\\UAInnovate\\UAInnovate\\UAInnovate.csproj",
+        "projectPath": "C:\\Users\\cloie\\Source\\Repos\\UAInnovate2025\\UAInnovate\\UAInnovate\\UAInnovate.csproj",
         "packagesPath": "C:\\Users\\cloie\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\cloie\\source\\UAInnovate\\UAInnovate\\obj\\",
+        "outputPath": "C:\\Users\\cloie\\Source\\Repos\\UAInnovate2025\\UAInnovate\\UAInnovate\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -66,9 +66,17 @@
               "target": "Package",
               "version": "[8.0.12, )"
             },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[8.0.11, )"
+            },
             "Microsoft.EntityFrameworkCore.Tools": {
               "target": "Package",
               "version": "[8.0.12, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[8.0.7, )"
             },
             "MudBlazor": {
               "target": "Package",
