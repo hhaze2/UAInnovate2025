@@ -1,31 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\cloie\\source\\UAInnovate\\UAInnovate\\UAInnovate.csproj": {}
+    "/Users/hannahhazelwood/cs495/UAInnovate25/UAInnovate2025/UAInnovate/UAInnovate/UAInnovate.csproj": {}
   },
   "projects": {
-    "C:\\Users\\cloie\\source\\UAInnovate\\UAInnovate\\UAInnovate.csproj": {
+    "/Users/hannahhazelwood/cs495/UAInnovate25/UAInnovate2025/UAInnovate/UAInnovate/UAInnovate.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\cloie\\source\\UAInnovate\\UAInnovate\\UAInnovate.csproj",
+        "projectUniqueName": "/Users/hannahhazelwood/cs495/UAInnovate25/UAInnovate2025/UAInnovate/UAInnovate/UAInnovate.csproj",
         "projectName": "UAInnovate",
-        "projectPath": "C:\\Users\\cloie\\source\\UAInnovate\\UAInnovate\\UAInnovate.csproj",
-        "packagesPath": "C:\\Users\\cloie\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\cloie\\source\\UAInnovate\\UAInnovate\\obj\\",
+        "projectPath": "/Users/hannahhazelwood/cs495/UAInnovate25/UAInnovate2025/UAInnovate/UAInnovate/UAInnovate.csproj",
+        "packagesPath": "/Users/hannahhazelwood/.nuget/packages/",
+        "outputPath": "/Users/hannahhazelwood/cs495/UAInnovate25/UAInnovate2025/UAInnovate/UAInnovate/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\cloie\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/hannahhazelwood/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -43,13 +37,20 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        },
-        "SdkAnalysisLevel": "9.0.100"
+        }
       },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "EntityFramework": {
+              "target": "Package",
+              "version": "[6.5.1, )"
+            },
+            "Microsoft.AspNetCore.Components.QuickGrid.EntityFrameworkAdapter": {
+              "target": "Package",
+              "version": "[8.0.11, )"
+            },
             "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": {
               "target": "Package",
               "version": "[8.0.12, )"
@@ -62,13 +63,39 @@
               "target": "Package",
               "version": "[8.0.12, )"
             },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.3, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.3, )"
+            },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[8.0.12, )"
+              "version": "[9.0.3, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[9.0.3, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite.Core": {
+              "target": "Package",
+              "version": "[9.0.3, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite.Design": {
+              "target": "Package",
+              "version": "[1.1.6, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "target": "Package",
               "version": "[8.0.12, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[8.0.7, )"
             },
             "MudBlazor": {
               "target": "Package",
@@ -94,7 +121,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.403/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
