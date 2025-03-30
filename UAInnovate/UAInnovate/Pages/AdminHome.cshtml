@@ -1,4 +1,76 @@
-﻿@page
+﻿@page "/AdminHome"
 @model UAInnovate.Pages.AdminHome
 @{
 }
+
+<div class="container mt-4">
+    <div class="row">
+        <!-- Card 1 -->
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5>We are Low On</h5>
+                </div>
+                <div class="card-body" style="height: 300px; overflow-y: auto;">
+                    <ul class="list-group">
+                        @foreach (var item in Model.InventoryCard)
+                        {
+                            <li class="list-group-item">@item</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5>New Suggestions</h5>
+                </div>
+                <div class="card-body" style="height: 300px; overflow-y: auto;">
+                    <ul class="list-group">
+                        @foreach (var item in Model.SuggestionCard)
+                        {
+                            <li class="list-group-item">@item</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5>New Requested Items</h5>
+                </div>
+                <div class="card-body" style="height: 300px; overflow-y: auto;">
+                    <ul class="list-group">
+                        @foreach (var item in Model.SuppliesCard)
+                        {
+                            <li class="list-group-item">@item</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5>New Maintenence Requests</h5>
+                </div>
+                <div class="card-body" style="height: 300px; overflow-y: auto;">
+                    <ul class="list-group">
+                        @foreach (var item in Model.MaintenanceCard)
+                        {
+                            <li class="list-group-item">@item</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -6,7 +6,8 @@ namespace UAInnovate.Models
 		High,
 		Medium,
 		Low,
-		None
+		None,
+		New
 	}
 }
 
