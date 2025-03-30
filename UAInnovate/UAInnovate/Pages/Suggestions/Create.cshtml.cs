@@ -24,10 +24,10 @@ namespace UAInnovate.Pages.Suggestions
             _userManager = userManager;
         }
 
-        public IActionResult OnGet()
-        {
-            return Page();
-        }
+        //public IActionResult OnGet()
+        //{
+        //    return Page();
+        //}
 
         [BindProperty]
         public UAInnovate.Models.Suggestions Suggestions { get; set; } = default!;
@@ -37,23 +37,57 @@ namespace UAInnovate.Pages.Suggestions
 
         // For more information, see https://aka.ms/RazorPagesCRUD.
 
-        public async Task OnGetAstnc()
+        public async Task OnGetAsync()
         {
-            var identityId = _userManager.GetUserId(User);
+            //var identityId = _userManager.GetUserId(User);
 
             // Query the database to fetch the corresponding UserModel
-            CurrentUserModel = await _context.UserModels.FindAsync(identityId);
+            //CurrentUserModel = await _context.UserModels.FindAsync(identityId);
 
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(bool IsAnonymous)
         {
-            Suggestions.User = CurrentUserModel;
-            var officeLocation = await _context.Office.FirstOrDefaultAsync(l => l.OfficeName == CurrentUserModel.WorkLocation);
-            //Suggestions.OfficeLocation = CurrentUserModel?.WorkLocation;
-            Suggestions.OfficeLocation = officeLocation;
+            var isAdmin = false;
+            var isUser = false;
+            if (User.Identity.IsAuthenticated)
+            {
+                
+                var user = await _userManager.GetUserAsync(User);
+                var username = user.Email;
+                var userModel = await _context.UserModels.FirstAsync(u => u.Username == username);
+                if (userModel.permissons.Contains("Admin"))
+                {
+                    isAdmin = true;
+                }
+                if (userModel.permissons.Contains("User"))
+                {
+                    isUser = true;
+                }
+                CurrentUserModel = userModel;
+            }
+            else
+            {
+                return Page();
+            }
+            if (IsAnonymous)
+            {
+                Suggestions.Username = "Anonymous";
+            }
+            else
+            {
+                Suggestions.Username = CurrentUserModel.Username;
+
+            }
+            //Suggestions.Username= CurrentUserModel.Username;
+            //var officeLocation = await _context.Office.FirstOrDefaultAsync(l => l.OfficeName == CurrentUserModel.WorkLocation);
+            Suggestions.OfficeLocation = CurrentUserModel.WorkLocation;
+            //Suggestions.OfficeLocation = officeLocation;
             Suggestions.Date = DateTime.UtcNow;
             Suggestions.Status = StatusTypes.InProgress;
+
+            ModelState.Remove("Suggestions.Username");
+            ModelState.Remove("Suggestions.OfficeLocation");
 
             if (!ModelState.IsValid)
             {
@@ -63,7 +97,14 @@ namespace UAInnovate.Pages.Suggestions
             _context.Suggestions.Add(Suggestions);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            if (isAdmin)
+            {
+                return RedirectToPage("./Index");
+            }
+            else
+            {
+                return RedirectToPage("./Create");
+            }
         }
     }
 }

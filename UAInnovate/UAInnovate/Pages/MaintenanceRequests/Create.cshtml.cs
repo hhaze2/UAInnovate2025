@@ -23,22 +23,44 @@ namespace UAInnovate.Pages.MaintenanceRequests
             _userManager = userManager;
         }
 
-        public IActionResult OnGet()
-        {
-            return Page();
-        }
+        //public IActionResult OnGet()
+        //{
+        //    return Page();
+        //}
 
         [BindProperty]
         public UAInnovate.Models.MaintenanceRequests MaintenanceRequests { get; set; } = default!;
 
         // For more information, see https://aka.ms/RazorPagesCRUD.
 
-        public async Task OnGetAstnc()
+        public async Task OnGetAsync()
         {
             var identityId = _userManager.GetUserId(User);
 
+            var isAdmin = false;
+            var isUser = false;
+            if (User.Identity.IsAuthenticated)
+            {
+                var user = await _userManager.GetUserAsync(User);
+                var username = user.Email;
+                var userModel = await _context.UserModels.FirstAsync(u => u.Username == username);
+                if (userModel.permissons.Contains("Admin"))
+                {
+                    isAdmin = true;
+                }
+                if (userModel.permissons.Contains("User"))
+                {
+                    isUser = true;
+                }
+                CurrentUserModel = userModel;
+            }
+
             // Query the database to fetch the corresponding UserModel
-            CurrentUserModel = await _context.UserModels.FindAsync(identityId);
+            //CurrentUserModel = await _context.UserModels.FindAsync(identityId);
+            else
+            {
+                CurrentUserModel = null;
+            }
 
             // Example: You now have the corresponding UserModel for the logged-in user
             if (CurrentUserModel == null)
@@ -49,12 +71,36 @@ namespace UAInnovate.Pages.MaintenanceRequests
         }
         public async Task<IActionResult> OnPostAsync()
         {
+            var isAdmin = false;
+            var isUser = false;
+            if (User.Identity.IsAuthenticated)
+            {
+                var user = await _userManager.GetUserAsync(User);
+                var username = user.Email;
+                var userModel = await _context.UserModels.FirstAsync(u => u.Username == username);
+                if (userModel.permissons.Contains("Admin"))
+                {
+                    isAdmin = true;
+                }
+                if (userModel.permissons.Contains("User"))
+                {
+                    isUser = true;
+                }
+                CurrentUserModel = userModel;
+            }
+            else
+            {
+                return Page();
+            }
             MaintenanceRequests.Date = DateTime.UtcNow;
-            MaintenanceRequests.User = CurrentUserModel;
-            var officeLocation = await _context.Office.FirstOrDefaultAsync(l => l.OfficeName == CurrentUserModel.WorkLocation);
-            MaintenanceRequests.OfficeLocation = officeLocation;
-            //MaintenanceRequests.OfficeLocation = CurrentUserModel?.WorkLocation;
+            MaintenanceRequests.Username = CurrentUserModel.Username;
+            //var officeLocation = await _context.Office.FirstOrDefaultAsync(l => l.OfficeName == CurrentUserModel.WorkLocation);
+            //MaintenanceRequests.OfficeLocation = officeLocation;
+            MaintenanceRequests.OfficeLocation = CurrentUserModel.WorkLocation;
             MaintenanceRequests.Status = StatusTypes.InProgress;
+
+            ModelState.Remove("MaintenanceRequests.Username");
+            ModelState.Remove("MaintenanceRequests.OfficeLocation");
             
             if (!ModelState.IsValid)
             {
@@ -64,7 +110,17 @@ namespace UAInnovate.Pages.MaintenanceRequests
             _context.MaintenanceRequests.Add(MaintenanceRequests);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            if (isAdmin)
+            {
+                return RedirectToPage("./Index");
+            }
+            else
+            {
+                return RedirectToPage("./Create");
+            }
+
+            
+
         }
     }
 }

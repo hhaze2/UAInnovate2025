@@ -19,6 +19,7 @@ namespace UAInnovate.Pages.UserModels
         private readonly UAInnovate.Data.ApplicationDbContext _context;
         public bool isAdmin;
         public bool isUser;
+        public string officeName;
 
         public EditModel(UAInnovate.Data.ApplicationDbContext context)
         {
@@ -27,6 +28,8 @@ namespace UAInnovate.Pages.UserModels
 
         [BindProperty]
         public UAInnovate.Models.UserModels UserModels { get; set; } = default!;
+
+        public IList<UAInnovate.Models.Office> Offices { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -62,7 +65,7 @@ namespace UAInnovate.Pages.UserModels
 
             //isAdmin = await _context.UserRoles.AnyAsync(claim => claim.UserId == usermodels.ForeignId && claim.RoleId == adminKey);
             //isUser = await _context.UserRoles.AnyAsync(claim => claim.UserId == usermodels.ForeignId && claim.RoleId == userKey);
-
+            Offices = await _context.Office.ToListAsync();
 
             UserModels = usermodels;
             return Page();
@@ -70,7 +73,7 @@ namespace UAInnovate.Pages.UserModels
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more information, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync(int id, bool isAdmin, bool isUser)
+        public async Task<IActionResult> OnPostAsync(int id, bool isAdmin, bool isUser, string officeName)
         {
             if (!ModelState.IsValid)
             {
@@ -92,6 +95,8 @@ namespace UAInnovate.Pages.UserModels
                     perms.Add("User");
                 }
                 userModel.permissons = perms;
+                userModel.WorkLocation = officeName;
+                
 
                 //_context.Attach(UserModels).State = EntityState.Modified;
 

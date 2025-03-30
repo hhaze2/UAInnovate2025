@@ -33,7 +33,7 @@ namespace UAInnovate.Repository
             }
             if (office != null)
             {
-                return _context.Inventory.Where(i => i.CurrentAmount <= (int)Math.Round((double)i.AvgAmount! * discount) && i.OfficeLocation == office).ToList();
+                return _context.Inventory.Where(i => i.CurrentAmount <= (int)Math.Round((double)i.AvgAmount! * discount) && i.OfficeLocation == office.OfficeName).ToList();
             }
             else
             {
@@ -45,7 +45,7 @@ namespace UAInnovate.Repository
         {
             if (office != null)
             {
-                return _context.OfficeSupplyRequests.Where(i => types.Contains(i.CurrStock) && i.OfficeLocation == office).ToList();
+                return _context.OfficeSupplyRequests.Where(i => types.Contains(i.CurrStock) && i.OfficeLocation == office.OfficeName).ToList();
             } 
             else
             {
@@ -57,7 +57,7 @@ namespace UAInnovate.Repository
         {
             if (office != null)
             {
-                return _context.MaintenanceRequests.Where(i => i.Priority == type && i.OfficeLocation != office).ToList();
+                return _context.MaintenanceRequests.Where(i => i.Priority == type && i.OfficeLocation != office.OfficeName).ToList();
             }
             else
             {
@@ -69,7 +69,7 @@ namespace UAInnovate.Repository
         {
             if (office != null)
             {
-                return _context.Suggestions.Where(i => i.Priority == type && i.OfficeLocation == office).ToList();
+                return _context.Suggestions.Where(i => i.Priority == type && i.OfficeLocation == office.OfficeName).ToList();
             }
             else
             {
@@ -79,7 +79,7 @@ namespace UAInnovate.Repository
 
         public async Task<Inventory> GetInventoryByName(string name, Office office)
         {
-            return await _context.Inventory.FirstOrDefaultAsync(i => i.ItemName == name && i.OfficeLocation == office);
+            return await _context.Inventory.FirstOrDefaultAsync(i => i.ItemName == name && i.OfficeLocation == office.OfficeName);
         }
 
         public async Task<Office> GetOfficeByName(string name)

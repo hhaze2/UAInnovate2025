@@ -13,7 +13,7 @@ namespace UAInnovate.Models
         public string? ItemName { get; set; }
 
         [Required]
-        public Office? OfficeLocation { get; set; }
+        public string? OfficeLocation { get; set; }
 
         [Required]
         public int? CurrentAmount { get; set; }
