@@ -44,10 +44,24 @@
                 <select asp-for="MaintenanceRequests.Priority" class="form-control"></select>
                 <span asp-validation-for="MaintenanceRequests.Priority" class="text-danger"></span>
             </div>
+            <input type="hidden" asp-for="MaintenanceRequests.Priority" />
+            @*<div class="form-group">
+            <span class="text-danger">*</span>
+            <label asp-for="MaintenanceRequests.Status" class="control-label"></label>
+            <select asp-for="MaintenanceRequests.Status" class="form-control"></select>
+            <span asp-validation-for="MaintenanceRequests.Status" class="text-danger"></span>
+        </div>*@
             <div class="form-group">
                 <span class="text-danger">*</span>
                 <label asp-for="MaintenanceRequests.Status" class="control-label"></label>
-                <select asp-for="MaintenanceRequests.Status" class="form-control"></select>
+                <select asp-for="MaintenanceRequests.Status" class="form-control">
+                    <option value="">-- Select Status --</option>
+                    @foreach (var role in Enum.GetValues(typeof(UAInnovate.Models.StatusTypes)))
+                    {
+                        <option value="@role">@role</option>
+                    }
+
+                </select>
                 <span asp-validation-for="MaintenanceRequests.Status" class="text-danger"></span>
             </div>
             <div class="form-group">
