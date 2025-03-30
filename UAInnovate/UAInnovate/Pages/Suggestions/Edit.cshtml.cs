@@ -43,6 +43,8 @@ namespace UAInnovate.Pages.Suggestions
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
+            ModelState.Remove("Suggestions.Username");
+            ModelState.Remove("Suggestions.OfficeLocation");
             if (!ModelState.IsValid)
             {
                 return Page();

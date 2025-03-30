@@ -43,6 +43,8 @@ namespace UAInnovate.Pages.OfficeSupplyRequests
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
+            ModelState.Remove("OfficeSupplyRequests.Username");
+            ModelState.Remove("OfficeSupplyRequests.OfficeLocation");
             if (!ModelState.IsValid)
             {
                 return Page();

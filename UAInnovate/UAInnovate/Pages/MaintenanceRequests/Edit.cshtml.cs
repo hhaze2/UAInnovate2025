@@ -43,6 +43,8 @@ namespace UAInnovate.Pages.MaintenanceRequests
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
+            ModelState.Remove("MaintenanceRequests.Username");
+            ModelState.Remove("MaintenanceRequests.OfficeLocation");
             if (!ModelState.IsValid)
             {
                 return Page();
