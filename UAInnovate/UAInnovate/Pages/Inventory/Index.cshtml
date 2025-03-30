@@ -1,0 +1,55 @@
+﻿@page
+@model UAInnovate.Pages.Inventory.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Inventory[0].ItemName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Inventory[0].CurrentAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Inventory[0].AvgAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Inventory[0].LastOrdered)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Inventory)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ItemName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CurrentAmount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AvgAmount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastOrdered)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
