@@ -21,7 +21,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     //.AddRoles<IdentityRole>();
 
 builder.Services.AddRazorPages();
-builder.Services.AddDbContext<UAInnovateContext>(options =>
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.")));
 
 var app = builder.Build();
