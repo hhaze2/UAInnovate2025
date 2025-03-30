@@ -1,35 +1,145 @@
-﻿@page
-@model UAInnovate.Pages.IndexModel
+﻿@*@page
+    @model UAInnovate.Pages.IndexModel
 
-@{
-    ViewData["Title"] = "Index";
-}
+    @{
+        ViewData["Title"] = "Index";
+    }*@
 
-<h1>Index</h1>
+@page
+@model IndexModel
+
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> UserManager
+@inject SignInManager<IdentityUser> SignInManager
+@using UAInnovate.Data
+@using Microsoft.EntityFrameworkCore
+@inject ApplicationDbContext _context
+
+@*@{
+        var isAdmin = false;
+        var isUser = false;
+        if (User.Identity.IsAuthenticated)
+        {
+            var user = await UserManager.GetUserAsync(User);
+            var username = user.Email;
+            var userModel = await _context.UserModels.FirstAsync(u => u.Username == username);
+            if (userModel.permissons.Contains("Admin"))
+            {
+                isAdmin = true;
+            }
+            if (userModel.permissons.Contains("User"))
+            {
+                isUser = true;
+            }
+        }
+        else
+        {
+            Red
+        }
+        //var isAdmin = user != null && await UserManager.IsInRoleAsync(user, "Admin");
+
+        @
+    }*@
+
+
+<script type="text/javascript">function redirectTo(url) {
+        window.location.href = url;
+    }</script>
 
 <div class="text-center">
-    <h1 class="display-4">Requests</h1>
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
-@* TODO: ADD CLIP ART TO SQUARES *@
-<div class="container-fluid" style="height: 100vh;">
-    <div class="row h-100">
-        <div class="col-4 d-flex align-items-center justify-content-center">
-            <a href="@Url.Page("/MaintenanceRequests/Create")" class="btn btn-primary" 
-               style="width: 100%; height: 80%; font-size: 2rem; text-align: center;">
-                Maintenance
-            </a>
-        </div>
-        <div class="col-4 d-flex align-items-center justify-content-center">
-            <a href="@Url.Page("/OfficeSupplyRequests/Create")" class="btn btn-secondary" 
-               style="width: 100%; height: 80%; font-size: 2rem; text-align: center;">
-                Office Supplies
-            </a>
-        </div>
-        <div class="col-4 d-flex align-items-center justify-content-center">
-            <a href="@Url.Page("/Suggestions/Create")" class="btn btn-success" 
-               style="width: 100%; height: 80%; font-size: 2rem; text-align: center;">
-                Suggestions
-            </a>
-        </div>
-    </div>
+@{
+    var isAdmin = false;
+    var isUser = false;
+    if (User.Identity.IsAuthenticated)
+    {
+        var user = await UserManager.GetUserAsync(User);
+        var username = user.Email;
+        var userModel = await _context.UserModels.FirstAsync(u => u.Username == username);
+        if (userModel.permissons.Contains("Admin"))
+        {
+            isAdmin = true;
+        }
+        if (userModel.permissons.Contains("User"))
+        {
+            isUser = true;
+        }
+
+        if (isAdmin)
+        {
+            <script type="text/javascript">redirectTo("/Privacy");</script>
+        }
+        else
+        {
+            <script type="text/javascript">redirectTo("/WorkerHome");</script>
+        }
+    }
+    else
+    {
+        <script type="text/javascript">redirectTo("Identity/Account/Login");</script>
+    }
+    //var isAdmin = user != null && await UserManager.IsInRoleAsync(user, "Admin");
+
+
+}
+
+@*<main role="main" class="pb-3">
+        @RenderBody()
+    </main>*@
+
+
+
+
+@*<p>
+        <a asp-page="Create">Create New</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Inventory[0].ItemName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Inventory[0].CurrentAmount)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Inventory[0].AvgAmount)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Inventory[0].LastOrdered)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model.Inventory) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ItemName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CurrentAmount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AvgAmount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastOrdered)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+    }
+        </tbody>
+    </table>*@
+
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>

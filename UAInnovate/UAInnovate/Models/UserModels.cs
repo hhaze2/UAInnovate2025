@@ -22,9 +22,9 @@ namespace UAInnovate.Models
 
 
 
-  //      public UserModels()
-		//{
-		//}
-	}
+        //      public UserModels()
+        //{
+        //}
+    }
 }
 

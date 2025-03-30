@@ -18,6 +18,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
+using UAInnovate.Models;
+using UAInnovate.Data;
 
 namespace UAInnovate.Areas.Identity.Pages.Account
 {
@@ -28,6 +31,7 @@ namespace UAInnovate.Areas.Identity.Pages.Account
         private readonly IUserStore<IdentityUser> _userStore;
         private readonly IUserEmailStore<IdentityUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
+        private readonly ApplicationDbContext _context;
         private readonly IEmailSender _emailSender;
 
         public RegisterModel(
@@ -35,13 +39,15 @@ namespace UAInnovate.Areas.Identity.Pages.Account
             IUserStore<IdentityUser> userStore,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            ApplicationDbContext context)
         {
             _userManager = userManager;
             _userStore = userStore;
             _emailStore = GetEmailStore();
             _signInManager = signInManager;
             _logger = logger;
+            _context = context;
             _emailSender = emailSender;
         }
 
@@ -121,6 +127,40 @@ namespace UAInnovate.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+
+                    var foreignID = (await _context.Users.FirstAsync(u => u.UserName == Input.Email)).Id;
+
+                    //var userKey = (await _context.Roles.FirstOrDefaultAsync(role => role.Name == Const.Role.User)).Id;
+                    var userKey = (await _context.Roles.FirstOrDefaultAsync(role => role.Name == Const.Role.User));
+
+                    if (userKey == null)
+                    {
+                        userKey = new IdentityRole { Name = "User"};
+                    }
+                    var key = userKey.Id;
+
+                    IdentityUserRole<string> identityUserRole = new IdentityUserRole<string>()
+                    {
+                        UserId = foreignID,
+                        RoleId = key
+                    };
+
+                    var roles = new List<string>();
+                    roles.Add(Const.Role.User);
+
+                    UserModels newUser = new UserModels()
+                    {
+                        ForeignId = foreignID,
+                        DayAdded = DateOnly.FromDateTime(DateTime.Now),
+                        Username = Input.Email,
+                        permissons = roles,
+                        WorkLocation = null
+                    };
+
+                    //await _context.UserRoles.AddAsync(identityUserRole);
+                    await _context.UserModels.AddAsync(newUser);
+
+                    await _context.SaveChangesAsync();
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
