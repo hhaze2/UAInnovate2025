@@ -1,0 +1,74 @@
+﻿@page
+@{
+
+
+}
+@using OpenAI
+@model AI
+@*<script type="module" src="./js/AI.js"></script>*@
+@*<script type="module">//import OpenAI from "openai";
+    //const client = new OpenAI();
+    import { Configuration, OpenAIApi } from 'openai';
+
+    const configuration = new Configuration({
+        apiKey: 'your-api-key',
+    });
+    const openai = new OpenAIApi(configuration);
+
+    async function makeSupplyRunSuggestion() {
+        const response = await openai.createCompletion({
+            model: "text-davinci-003",
+            prompt: "Suggest a supply run.",
+            max_tokens: 50
+        });
+        console.log(response.data.choices[0].text);
+    }
+
+    export { makeSupplyRunSuggestion };
+
+    async function makeSupplyRunSuggestion() {
+        fetch('/AIRepository/GetInventory')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json(); // Assuming your API returns JSON data
+            })
+            .then(data => {
+                const jsonObj = JSON.parse(data);
+                console.log(jsonObj);
+                //var uniqueKeys = new Map();
+                //jsonObj.forEach(
+                //    (element) => {
+                //        var dateOfObj = element.date
+                //        if (uniqueKeys.has(dateOfObj)) {
+                //            uniqueKeys.set(dateOfObj, uniqueKeys.get(dateOfObj) + element.userCount)
+                //        } else {
+                //            uniqueKeys.set(dateOfObj, element.userCount)
+                //        }
+                //    }
+                //);
+
+                //const response = await client.responses.create({
+                //    model: "gpt-4o",
+                //    input: "Write a one-sentence bedtime story about a unicorn.",
+                //});
+            })
+            .catch(error => {
+                console.error('Fetch error:', error);
+            });
+
+        console.log(response.output_text);
+    }</script>*@
+
+<div>
+    <h1>Based on your current Supply Run, here is a potential Order List</h1>
+    <div>
+        <p>@Model.supplyRun</p>
+    </div>
+
+    @*<button onclick="makeSupplyRunSuggestion()" class="text-box"> Generate </button>*@
+</div>
+
+
+
