@@ -13,10 +13,10 @@ namespace UAInnovate.Models
         public DateTime Date { get; set; }
 
         [Required]
-        public UserModels? User { get; set; }
+        public string? Username { get; set; }
 
         [Required]
-        public Office? OfficeLocation { get; set; }
+        public string? OfficeLocation { get; set; }
 
         [Required]
         public OfficeSupplyTypes Type { get; set; }

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
+//using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
@@ -25,38 +25,62 @@ namespace UAInnovate.Pages.OfficeSupplyRequests
             _userManager = userManager;
         }
 
-        public IActionResult OnGet()
-        {
-            return Page();
-        }
+        //public IActionResult OnGet()
+        //{
+        //    return Page();
+        //}
 
         [BindProperty]
         public UAInnovate.Models.OfficeSupplyRequests OfficeSupplyRequests { get; set; } = default!;
 
         // For more information, see https://aka.ms/RazorPagesCRUD.
 
-        public async Task OnGetAstnc()
+        public async Task OnGetAsync()
         {
-            var identityId = _userManager.GetUserId(User);
+            //var identityId = _userManager.GetUserId(User);
 
             // Query the database to fetch the corresponding UserModel
-            CurrentUserModel = await _context.UserModels.FindAsync(identityId);
+            //CurrentUserModel = await _context.UserModels.FindAsync(identityId);
 
             // Example: You now have the corresponding UserModel for the logged-in user
-            if (CurrentUserModel == null)
-            {
-                // Handle case where user model isn't found in the database
-            }
+            //if (CurrentUserModel == null)
+            //{
+            //    // Handle case where user model isn't found in the database
+            //}
 
         }
         public async Task<IActionResult> OnPostAsync()
         {
+            var isAdmin = false;
+            var isUser = false;
+            if (User.Identity.IsAuthenticated)
+            {
+                var user = await _userManager.GetUserAsync(User);
+                var username = user.Email;
+                var userModel = await _context.UserModels.FirstAsync(u => u.Username == username);
+                if (userModel.permissons.Contains("Admin"))
+                {
+                    isAdmin = true;
+                }
+                if (userModel.permissons.Contains("User"))
+                {
+                    isUser = true;
+                }
+                CurrentUserModel = userModel;
+            }
+            else
+            {
+                return Page();
+            }
             OfficeSupplyRequests.Date = DateTime.UtcNow;
-            OfficeSupplyRequests.User = CurrentUserModel;
-            var officeLocation = await _context.Office.FirstOrDefaultAsync(l => l.OfficeName == CurrentUserModel.WorkLocation);
-            OfficeSupplyRequests.OfficeLocation = officeLocation;
-            //OfficeSupplyRequests.OfficeLocation = CurrentUserModel?.WorkLocation;
+            OfficeSupplyRequests.Username = CurrentUserModel.Username;
+            //var officeLocation = await _context.Office.FirstOrDefaultAsync(l => l.OfficeName == CurrentUserModel.WorkLocation);
+            //OfficeSupplyRequests.OfficeLocation = officeLocation;
+            OfficeSupplyRequests.OfficeLocation = CurrentUserModel.WorkLocation;
             OfficeSupplyRequests.Status = StatusTypes.InProgress;
+
+            ModelState.Remove("OfficeSupplyRequests.Username");
+            ModelState.Remove("OfficeSupplyRequests.OfficeLocation");
 
             if (!ModelState.IsValid)
             {
@@ -97,7 +121,14 @@ namespace UAInnovate.Pages.OfficeSupplyRequests
             }
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            if (isAdmin)
+            {
+                return RedirectToPage("./Index");
+            }
+            else
+            {
+                return RedirectToPage("./Create");
+            }
         }
     }
 }

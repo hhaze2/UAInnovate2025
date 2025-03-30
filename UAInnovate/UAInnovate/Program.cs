@@ -4,6 +4,7 @@ using UAInnovate.Data;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.DependencyInjection;
 using static UAInnovate.Const;
+using UAInnovate.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 

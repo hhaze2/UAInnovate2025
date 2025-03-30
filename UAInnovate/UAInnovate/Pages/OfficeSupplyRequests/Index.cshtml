@@ -35,10 +35,10 @@
                 @Html.DisplayNameFor(model => model.OfficeSupplyRequests[0].Status)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.OfficeSupplyRequests[0].OfficeLocation.OfficeName)
+                @Html.DisplayNameFor(model => model.OfficeSupplyRequests[0].OfficeLocation)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.OfficeSupplyRequests[0].User.Username)
+                @Html.DisplayNameFor(model => model.OfficeSupplyRequests[0].Username)
             </th>
             <th></th>
         </tr>
@@ -69,10 +69,10 @@
                     @Html.DisplayFor(modelItem => item.Status)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.OfficeLocation.OfficeName)
+                    @Html.DisplayFor(modelItem => item.OfficeLocation)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.User.Username)
+                    @Html.DisplayFor(modelItem => item.Username)
                 </td>
                 <td>
                     <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |

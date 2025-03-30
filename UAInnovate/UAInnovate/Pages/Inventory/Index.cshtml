@@ -25,6 +25,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Inventory[0].LastOrdered)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Inventory[0].OfficeLocation)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -43,6 +46,9 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.LastOrdered)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OfficeLocation)
                 </td>
                 <td>
                     <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
