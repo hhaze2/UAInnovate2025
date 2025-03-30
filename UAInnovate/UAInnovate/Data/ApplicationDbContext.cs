@@ -14,5 +14,7 @@ namespace UAInnovate.Data
         public DbSet<UAInnovate.Models.Office> Office { get; set; } = default!;
         public DbSet<UAInnovate.Models.OfficeSupplyRequests> OfficeSupplyRequests { get; set; } = default!;
         public DbSet<UAInnovate.Models.Inventory> Inventory { get; set; } = default!;
+        public DbSet<UAInnovate.Models.Suggestions> Suggestions { get; set; } = default!;
+        public DbSet<UAInnovate.Models.UserModels> UserModels { get; set; } = default!;
     }
 }

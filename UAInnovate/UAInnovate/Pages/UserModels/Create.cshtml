@@ -1,0 +1,49 @@
+﻿@page
+@model UAInnovate.Pages.UserModels.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>UserModels</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="UserModels.ForeignId" class="control-label"></label>
+                <input asp-for="UserModels.ForeignId" class="form-control" />
+                <span asp-validation-for="UserModels.ForeignId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserModels.DayAdded" class="control-label"></label>
+                <input asp-for="UserModels.DayAdded" class="form-control" />
+                <span asp-validation-for="UserModels.DayAdded" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserModels.Username" class="control-label"></label>
+                <input asp-for="UserModels.Username" class="form-control" />
+                <span asp-validation-for="UserModels.Username" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserModels.permissons" class="control-label"></label>
+                <input asp-for="UserModels.permissons" class="form-control" />
+                <span asp-validation-for="UserModels.permissons" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
