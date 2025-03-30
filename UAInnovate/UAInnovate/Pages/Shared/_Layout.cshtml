@@ -56,22 +56,16 @@
                         @if (User.Identity.IsAuthenticated && isAdmin)
                         {
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/MaintenanceRequests/Index">Maintenance Requests</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/MaintenanceRequests/Index">Maintenance</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/OfficeSupplyRequests/Index">Office Supply Requests</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/OfficeSupplyRequests/Index">Office Supplies</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Suggestions/Index">Suggestions</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Inventory/Index">Inventory</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/UserModels/Index">Users</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/OfficePages/Index">Offices</a>
                         </li>
                         }
                     </ul>

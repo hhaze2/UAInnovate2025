@@ -3,9 +3,9 @@
 @{
 }
 
-<div class="container">
-    <button class="btn btn-primary" type="submit" asp-page-handler="SendEmail">Click Me</button>
-</div>
+@* <div class="container"> *@
+@*     <button class="btn btn-primary" type="submit" asp-page-handler="SendEmail">Click Me</button> *@
+@* </div> *@
 
 
 <div class="container mt-4">
@@ -112,15 +112,28 @@
         <div class="col-6">
             <div class="card">
                 <div class="card-header">
-                    <h5>We are Low On</h5>
+                    <h5>Low Items</h5>
                 </div>
                 <div class="card-body" style="height: 300px; overflow-y: auto;">
-                    <ul class="list-group">
-                        @foreach (var item in Model.InventoryCard)
-                        {
-                            <li class="list-group-item">@item</li>
-                        }
-                    </ul>
+                    <table class="table table-striped table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Item</th>
+                                <th>Stock</th>
+                                <th>Last Bought</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.InventoryCard)
+                            {
+                                <tr>
+                                    <td>@item.ItemName</td>
+                                    <td>@item.CurrentAmount</td>
+                                    <td>@item.LastOrdered</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -132,12 +145,25 @@
                     <h5>New Suggestions</h5>
                 </div>
                 <div class="card-body" style="height: 300px; overflow-y: auto;">
-                    <ul class="list-group">
+                <table class="table table-striped table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Suggestion</th>
+                            <th>Priority</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
                         @foreach (var item in Model.SuggestionCard)
                         {
-                            <li class="list-group-item">@item</li>
+                            <tr>
+                                <td>@item.SuggestionText</td>
+                                <td>@item.Priority</td>
+                                <td>@item.Date.ToShortDateString()</td>
+                            </tr>
                         }
-                    </ul>
+                    </tbody>
+                </table>
                 </div>
             </div>
         </div>
@@ -149,12 +175,25 @@
                     <h5>New Requested Items</h5>
                 </div>
                 <div class="card-body" style="height: 300px; overflow-y: auto;">
-                    <ul class="list-group">
-                        @foreach (var item in Model.SuppliesCard)
-                        {
-                            <li class="list-group-item">@item</li>
-                        }
-                    </ul>
+                    <table class="table table-striped table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Item</th>
+                                <th>Priority</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.SuppliesCard)
+                            {
+                                <tr>
+                                    <td>@item.ItemName</td>
+                                    <td>@item.Priority</td>
+                                    <td>@item.Date.ToShortDateString()</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -166,12 +205,25 @@
                     <h5>New Maintenence Requests</h5>
                 </div>
                 <div class="card-body" style="height: 300px; overflow-y: auto;">
-                    <ul class="list-group">
-                        @foreach (var item in Model.MaintenanceCard)
-                        {
-                            <li class="list-group-item">@item</li>
-                        }
-                    </ul>
+                    <table class="table table-striped table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Summary</th>
+                                <th>Location</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.MaintenanceCard)
+                            {
+                                <tr>
+                                    <td>@item.Summary</td>
+                                    <td>@item.IssueLocation</td>
+                                    <td>@item.Date.ToShortDateString()</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
