@@ -4,6 +4,8 @@ using UAInnovate.Data;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.DependencyInjection;
 using static UAInnovate.Const;
+using UAInnovate.Repository;
+using UAInnovate.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,7 +33,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.")));
 builder.Services.AddScoped<IRepository, Repository>();
-
+builder.Services.AddSingleton<EmailService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

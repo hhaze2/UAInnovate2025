@@ -3,6 +3,109 @@
 @{
 }
 
+<div class="container">
+    <button class="btn btn-primary" type="submit" asp-page-handler="SendEmail">Click Me</button>
+</div>
+
+
+<div class="container mt-4">
+    <h1>Requests Over Time</h1>
+    <canvas id="requestsChart" width="800" height="400"></canvas>
+</div>
+
+<!-- Include Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Access the server-side DataPoints property and serialize it into JSON for JavaScript
+    var dataPoints = @Html.Raw(Json.Serialize(Model.TimeDataPoints));
+
+    // Extract the labels (x-axis) and data (y-axis) from the dataPoints
+    var labels = dataPoints.map(point => point.x); // Dates
+    var data = dataPoints.map(point => point.y);  // Request counts
+
+    var ctx = document.getElementById('requestsChart').getContext('2d');
+    var chart = new Chart(ctx, {
+        type: 'line', // Type of chart (can also use 'bar', etc.)
+        data: {
+            labels: labels, // X-axis data (dates)
+            datasets: [{
+                label: 'Number of Supply Requests',
+                data: data, // Y-axis data (request counts)
+                backgroundColor: 'rgba(54, 162, 235, 0.2)', // Light blue background
+                borderColor: 'rgba(54, 162, 235, 1)',       // Blue border
+                borderWidth: 2
+            }]
+        },
+        options: {
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Date'
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Number of Supply Requests'
+                    }
+                }
+            }
+        }
+    });
+</script>
+
+<div class="container mt-4">
+    <h1>Most Requested Items</h1>
+    <canvas id="itemsChart" width="800" height="400"></canvas>
+</div>
+
+<!-- Include Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Access the server-side data points
+    var dataPoints = @Html.Raw(Json.Serialize(Model.ItemDataPoints));
+
+    // Extract labels (item names) and data (request counts)
+    var labels = dataPoints.map(point => point.x); // Item names
+    var data = dataPoints.map(point => point.y);  // Request counts
+
+    var ctx = document.getElementById('itemsChart').getContext('2d');
+    var chart = new Chart(ctx, {
+        type: 'bar', // Bar chart
+        data: {
+            labels: labels, // X-axis labels (item names)
+            datasets: [{
+                label: 'Number of Supply Requests',
+                data: data, // Y-axis data (request counts)
+                backgroundColor: 'rgba(75, 192, 192, 0.2)', // Bar color
+                borderColor: 'rgba(75, 192, 192, 1)',       // Bar border
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Item Name'
+                    },
+                    ticks: {
+                        autoSkip: false // Ensures all labels are displayed even for long names
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Supply Item Request Count'
+                    },
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+
 <div class="container mt-4">
     <div class="row">
         <!-- Card 1 -->
