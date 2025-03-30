@@ -70,6 +70,8 @@ namespace UAInnovate.Areas.Identity.Pages.Account
         /// </summary>
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
+        public IList<Office> Offices { get; set; }
+
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
@@ -103,6 +105,8 @@ namespace UAInnovate.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            public string? OfficeId { get; set; }
         }
 
 
@@ -110,6 +114,7 @@ namespace UAInnovate.Areas.Identity.Pages.Account
         {
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            Offices = await _context.Office.ToListAsync();
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
@@ -148,13 +153,16 @@ namespace UAInnovate.Areas.Identity.Pages.Account
                     var roles = new List<string>();
                     roles.Add(Const.Role.User);
 
+                    //var workLocation = await _context.Office.FirstOrDefaultAsync(l => l.Id == Input.OfficeId);
+
+                    //NOTE OFFICEID = OFFICENAME
                     UserModels newUser = new UserModels()
                     {
                         ForeignId = foreignID,
                         DayAdded = DateOnly.FromDateTime(DateTime.Now),
                         Username = Input.Email,
                         permissons = roles,
-                        WorkLocation = null
+                        WorkLocation = Input.OfficeId
                     };
 
                     //await _context.UserRoles.AddAsync(identityUserRole);

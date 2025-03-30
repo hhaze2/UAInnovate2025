@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using UAInnovate.Data;
 using UAInnovate.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace UAInnovate.Pages.Suggestions
 {
@@ -48,7 +49,9 @@ namespace UAInnovate.Pages.Suggestions
         public async Task<IActionResult> OnPostAsync()
         {
             Suggestions.User = CurrentUserModel;
-            Suggestions.OfficeLocation = CurrentUserModel?.WorkLocation;
+            var officeLocation = await _context.Office.FirstOrDefaultAsync(l => l.OfficeName == CurrentUserModel.WorkLocation);
+            //Suggestions.OfficeLocation = CurrentUserModel?.WorkLocation;
+            Suggestions.OfficeLocation = officeLocation;
             Suggestions.Date = DateTime.UtcNow;
             Suggestions.Status = StatusTypes.InProgress;
 

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using UAInnovate.Data;
 using UAInnovate.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace UAInnovate.Pages.OfficeSupplyRequests
 {
@@ -52,7 +53,9 @@ namespace UAInnovate.Pages.OfficeSupplyRequests
         {
             OfficeSupplyRequests.Date = DateTime.UtcNow;
             OfficeSupplyRequests.User = CurrentUserModel;
-            OfficeSupplyRequests.OfficeLocation = CurrentUserModel?.WorkLocation;
+            var officeLocation = await _context.Office.FirstOrDefaultAsync(l => l.OfficeName == CurrentUserModel.WorkLocation);
+            OfficeSupplyRequests.OfficeLocation = officeLocation;
+            //OfficeSupplyRequests.OfficeLocation = CurrentUserModel?.WorkLocation;
             OfficeSupplyRequests.Status = StatusTypes.InProgress;
 
             if (!ModelState.IsValid)
