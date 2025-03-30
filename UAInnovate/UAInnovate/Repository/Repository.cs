@@ -49,7 +49,7 @@ namespace UAInnovate.Repository
             } 
             else
             {
-                return _context.OfficeSupplyRequests.Where(i => types.Contains(i.CurrStock)).ToList();
+                return _context.OfficeSupplyRequests.Where(i => types.Contains(i.CurrStock) && i.Status == StatusTypes.InProgress).ToList();
             }
         }
 
@@ -61,7 +61,7 @@ namespace UAInnovate.Repository
             }
             else
             {
-                return _context.MaintenanceRequests.Where(i => i.Priority == type).ToList();
+                return _context.MaintenanceRequests.Where(i => i.Priority == type && i.Status == StatusTypes.InProgress).ToList();
             }
         }
 
@@ -73,7 +73,7 @@ namespace UAInnovate.Repository
             }
             else
             {
-                return _context.Suggestions.Where(i => i.Priority == type).ToList();
+                return _context.Suggestions.Where(i => i.Priority == type && i.Status == StatusTypes.InProgress).ToList();
             }
         }
 
@@ -85,6 +85,49 @@ namespace UAInnovate.Repository
         public async Task<Office> GetOfficeByName(string name)
         {
             return await _context.Office.FirstOrDefaultAsync(i => i.OfficeName == name);
+        }
+
+        public async Task<OfficeSupplyRequests> UpdateStatus(OfficeSupplyRequests item, StatusTypes type)
+        {
+            item.Status = type;
+            _context.OfficeSupplyRequests.Update(item);
+            await _context.SaveChangesAsync();
+            return item;
+        }
+
+        public async Task<MaintenanceRequests> UpdateStatus(MaintenanceRequests item, StatusTypes type)
+        {
+            item.Status = type;
+            _context.MaintenanceRequests.Update(item);
+            await _context.SaveChangesAsync();
+            return item;
+        }
+
+        public async Task<Suggestions> UpdateStatus(Suggestions item, StatusTypes type)
+        {
+            item.Status = type;
+            _context.Suggestions.Update(item);
+            await _context.SaveChangesAsync();
+            return item;
+        }
+
+        public async Task<OfficeSupplyRequests> GetSupplyRequest(int id)
+        {
+             return _context.OfficeSupplyRequests.FirstOrDefault(i => i.Id == id);
+        }
+
+        public async Task<MaintenanceRequests> GetMaintenanceRequest(int id)
+        {
+            return _context.MaintenanceRequests.FirstOrDefault(i => i.Id == id);
+        }
+        public async Task<Suggestions> GetSuggestions(int id)
+        {
+            return _context.Suggestions.FirstOrDefault(i => i.Id == id);
+        }
+
+        public async Task<IEnumerable<OfficeSupplyRequests>> GetSuppliesByStatus(StatusTypes type)
+        {
+            return await _context.OfficeSupplyRequests.Where(i => i.Status == type).ToListAsync();
         }
     }
 }

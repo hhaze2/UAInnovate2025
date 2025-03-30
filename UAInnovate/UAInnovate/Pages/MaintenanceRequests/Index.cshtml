@@ -68,9 +68,27 @@
                 @Html.DisplayFor(modelItem => item.OfficeLocation)
             </td>
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                @*     <a asp-page="./Index" asp-route-id="@{ *@
+                @*     Model.SetRejected(item.Id); *@
+                @*     }">Reject</a> | *@
+                @*     <a asp-page="./Index" asp-route-id="@{ *@
+                @*     Model.SetComplete(item.Id); *@
+                @*     }">Completed</a> | *@
+                @* <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a> *@
+                    <form method="post"> 
+                        <input type="hidden" name="id" value="@item.Id" />
+                        <button type="submit" asp-page-handler="Reject" class="btn btn-primary">
+                            Reject
+                        </button>
+                    </form>
+                    <form method="post">
+                        <input type="hidden" name="id" value="@item.Id" />
+                        <button type="submit" asp-page-handler="Complete" class="btn btn-primary">
+                            Completed
+                        </button>
+                    </form>
+
+
             </td>
         </tr>
 }
