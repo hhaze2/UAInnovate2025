@@ -18,13 +18,14 @@ namespace UAInnovate.Models
         //these are the user's roles
         public List<string> permissons { get; set; }
 
-        public Office? WorkLocation { get; set; }
+        //public Office? WorkLocation { get; set; }
+        public string? WorkLocation { get; set; }
 
 
 
-  //      public UserModels()
-		//{
-		//}
-	}
+        //      public UserModels()
+        //{
+        //}
+    }
 }
 

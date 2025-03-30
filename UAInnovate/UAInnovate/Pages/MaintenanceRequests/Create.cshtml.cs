@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using UAInnovate.Data;
 using UAInnovate.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace UAInnovate.Pages.MaintenanceRequests
 {
@@ -50,7 +51,9 @@ namespace UAInnovate.Pages.MaintenanceRequests
         {
             MaintenanceRequests.Date = DateTime.UtcNow;
             MaintenanceRequests.User = CurrentUserModel;
-            MaintenanceRequests.OfficeLocation = CurrentUserModel?.WorkLocation;
+            var officeLocation = await _context.Office.FirstOrDefaultAsync(l => l.OfficeName == CurrentUserModel.WorkLocation);
+            MaintenanceRequests.OfficeLocation = officeLocation;
+            //MaintenanceRequests.OfficeLocation = CurrentUserModel?.WorkLocation;
             MaintenanceRequests.Status = StatusTypes.InProgress;
             
             if (!ModelState.IsValid)

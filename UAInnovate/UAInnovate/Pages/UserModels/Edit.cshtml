@@ -14,30 +14,58 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="UserModels.Id" />
-            <div class="form-group">
-                <label asp-for="UserModels.ForeignId" class="control-label"></label>
-                <input asp-for="UserModels.ForeignId" class="form-control" />
-                <span asp-validation-for="UserModels.ForeignId" class="text-danger"></span>
+            <input type="hidden" asp-for="UserModels.DayAdded" />
+            <input type="hidden" asp-for="UserModels.Username" />
+            <input type="hidden" asp-for="UserModels.WorkLocation" />
+            <input type="hidden" asp-for="UserModels.ForeignId" />
+            <input type="hidden" asp-for="UserModels.permissons" />
+            <div class="form-group" style="display: inline-block">
+                <label>Admin Status</label>
+                @Html.EditorFor(x => x.isAdmin, new { htmlAttributes = new { @class = "yellow-button" } })
             </div>
-            <div class="form-group">
-                <label asp-for="UserModels.DayAdded" class="control-label"></label>
-                <input asp-for="UserModels.DayAdded" class="form-control" />
-                <span asp-validation-for="UserModels.DayAdded" class="text-danger"></span>
+            <div class="form-group" style="display: inline-block">
+                <label>User Status</label>
+                @Html.EditorFor(x => x.isUser)
             </div>
-            <div class="form-group">
-                <label asp-for="UserModels.Username" class="control-label"></label>
-                <input asp-for="UserModels.Username" class="form-control" />
-                <span asp-validation-for="UserModels.Username" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UserModels.permissons" class="control-label"></label>
-                <input asp-for="UserModels.permissons" class="form-control" />
-                <span asp-validation-for="UserModels.permissons" class="text-danger"></span>
-            </div>
+            @*<div class="form-group">
+            <label asp-for="UserModels.ForeignId" class="control-label"></label>
+            <input asp-for="UserModels.ForeignId" class="form-control" />
+            <span asp-validation-for="UserModels.ForeignId" class="text-danger"></span>
+        </div>*@
+            @*<div class="form-group">
+            <label asp-for="UserModels.DayAdded" class="control-label"></label>
+            <input asp-for="UserModels.DayAdded" class="form-control" />
+            <span asp-validation-for="UserModels.DayAdded" class="text-danger"></span>
+        </div>*@
+            @*<div class="form-group">
+            <label asp-for="UserModels.Username" class="control-label"></label>
+            <input asp-for="UserModels.Username" class="form-control" />
+            <span asp-validation-for="UserModels.Username" class="text-danger"></span>
+        </div>*@
+            @*<div class="form-group">
+            <label asp-for="UserModels.permissons" class="control-label"></label>
+            <input asp-for="UserModels.permissons" class="form-control" />
+            <span asp-validation-for="UserModels.permissons" class="text-danger"></span>
+        </div>*@
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
+        @*<form asp-action="EditPerms" class="perms">*@
+        @*<form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group" style="display: inline-block">
+                <label>Admin Status</label>
+                @Html.EditorFor(x => x.isAdmin, new { htmlAttributes = new { @class = "yellow-button" } })
+            </div>
+            <div class="form-group" style="display: inline-block">
+                <label>User Status</label>
+                @Html.EditorFor(x => x.isUser)
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="yellow-button" />
+            </div>
+        </form>*@
     </div>
 </div>
 

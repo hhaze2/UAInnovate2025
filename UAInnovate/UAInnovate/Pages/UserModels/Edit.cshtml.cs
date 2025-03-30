@@ -8,12 +8,17 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using UAInnovate.Data;
 using UAInnovate.Models;
+using static UAInnovate.Const;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace UAInnovate.Pages.UserModels
 {
     public class EditModel : PageModel
     {
         private readonly UAInnovate.Data.ApplicationDbContext _context;
+        public bool isAdmin;
+        public bool isUser;
 
         public EditModel(UAInnovate.Data.ApplicationDbContext context)
         {
@@ -35,23 +40,61 @@ namespace UAInnovate.Pages.UserModels
             {
                 return NotFound();
             }
+
+            //var adminKey = (await _context.Roles.FirstAsync(role => role.Name == Const.Role.Admin)).Id;
+            //var userKey = (await _context.Roles.FirstAsync(role => role.Name == Const.Role.User)).Id;
+
+            if (usermodels.permissons.Contains("User")){
+                isUser = true;
+            }
+            else
+            {
+                isUser = false;
+            }
+            if (usermodels.permissons.Contains("Admin"))
+            {
+                isAdmin = true;
+            }
+            else
+            {
+                isAdmin = false;
+            }
+
+            //isAdmin = await _context.UserRoles.AnyAsync(claim => claim.UserId == usermodels.ForeignId && claim.RoleId == adminKey);
+            //isUser = await _context.UserRoles.AnyAsync(claim => claim.UserId == usermodels.ForeignId && claim.RoleId == userKey);
+
+
             UserModels = usermodels;
             return Page();
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more information, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int id, bool isAdmin, bool isUser)
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            _context.Attach(UserModels).State = EntityState.Modified;
+            //_context.Attach(UserModels).State = EntityState.Modified;
+            var userModel = await _context.UserModels.FirstAsync(u => u.Id == id);
 
             try
             {
+                var perms = new List<string>();
+                if (isAdmin)
+                {
+                    perms.Add("Admin");
+                }
+                if (isUser)
+                {
+                    perms.Add("User");
+                }
+                userModel.permissons = perms;
+
+                //_context.Attach(UserModels).State = EntityState.Modified;
+
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)

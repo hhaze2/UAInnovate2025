@@ -1,8 +1,34 @@
 ﻿@page
 @model UAInnovate.Pages.OfficeSupplyRequests.CreateModel
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> UserManager
+@inject SignInManager<IdentityUser> SignInManager
+@using UAInnovate.Data
+@using Microsoft.EntityFrameworkCore
+@inject ApplicationDbContext _context
 
 @{
     ViewData["Title"] = "Create";
+}
+
+@{
+    var isAdmin = false;
+    var isUser = false;
+    if (User.Identity.IsAuthenticated)
+    {
+        var user = await UserManager.GetUserAsync(User);
+        var username = user.Email;
+        var userModel = await _context.UserModels.FirstAsync(u => u.Username == username);
+        if (userModel.permissons.Contains("Admin"))
+        {
+            isAdmin = true;
+        }
+        if (userModel.permissons.Contains("User"))
+        {
+            isUser = true;
+        }
+    }
+    //var isAdmin = user != null && await UserManager.IsInRoleAsync(user, "Admin");
 }
 
 <h1>Create</h1>
@@ -61,6 +87,8 @@
                     {
                         <option value="@role">@role</option>
                     }
+
+
                 </select>
                 <span asp-validation-for="OfficeSupplyRequests.Priority" class="text-danger"></span>
             </div>
@@ -78,7 +106,15 @@
 </div>
 
 <div>
-    <a asp-page="Index">Back to List</a>
+    @if (isAdmin)
+    {
+        <a asp-page="Index">Back to List</a>
+    }
+    else
+    {
+        <a asp-area="" asp-page="/WorkerHome">Back to List</a>
+    }
+
 </div>
 
 @section Scripts {

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using UAInnovate.Data;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.DependencyInjection;
-using UAInnovate.Repository;
+using static UAInnovate.Const;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,8 +18,14 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
-    //.AddRoles<IdentityRole>();
+
+builder.Services.AddAuthorization(options => {
+    options.AddPolicy(Policy.AdminAndManager, policy =>
+        policy.RequireRole(Role.Admin).RequireRole(Role.User) // AND
+    );
+});
 
 builder.Services.AddRazorPages();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>

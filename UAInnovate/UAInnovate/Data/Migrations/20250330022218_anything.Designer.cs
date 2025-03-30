@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UAInnovate.Data;
 
@@ -10,9 +11,11 @@ using UAInnovate.Data;
 namespace test.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250330022218_anything")]
+    partial class anything
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.3");
@@ -398,14 +401,16 @@ namespace test.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("WorkLocation")
-                        .HasColumnType("TEXT");
+                    b.Property<int?>("WorkLocationId")
+                        .HasColumnType("INTEGER");
 
                     b.PrimitiveCollection<string>("permissons")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("WorkLocationId");
 
                     b.ToTable("UserModels");
                 });
@@ -527,6 +532,15 @@ namespace test.Data.Migrations
                     b.Navigation("OfficeLocation");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("UAInnovate.Models.UserModels", b =>
+                {
+                    b.HasOne("UAInnovate.Models.Office", "WorkLocation")
+                        .WithMany()
+                        .HasForeignKey("WorkLocationId");
+
+                    b.Navigation("WorkLocation");
                 });
 #pragma warning restore 612, 618
         }
