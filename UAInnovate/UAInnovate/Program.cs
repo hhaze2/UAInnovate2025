@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using UAInnovate.Data;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.DependencyInjection;
+using UAInnovate.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +24,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 builder.Services.AddRazorPages();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.")));
+builder.Services.AddScoped<IRepository, Repository>();
 
 var app = builder.Build();
 
